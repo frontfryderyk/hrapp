@@ -4,6 +4,8 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 
+import java.util.Enumeration;
+
 @Table(name="user_type")
 @Entity
 public class UserType {
@@ -36,3 +38,4 @@ public class UserType {
         return id;
     }
 }
+
