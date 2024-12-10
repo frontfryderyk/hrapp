@@ -1,7 +1,7 @@
-package projekty.hrapp.Repository;
+package projekty.hrapp.repository;
 
 import org.springframework.data.jpa.repository.JpaRepository;
-import projekty.hrapp.Model.Project;
+import projekty.hrapp.model.entity.Project;
 
 public interface ProjectRepository extends JpaRepository<Project, Integer> {
 }

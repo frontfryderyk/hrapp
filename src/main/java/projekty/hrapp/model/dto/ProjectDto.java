@@ -1,26 +1,9 @@
-package projekty.hrapp.Model;
+package projekty.hrapp.model.dto;
 
-import jakarta.persistence.*;
-
-@Entity
-@Table(name = "projects")
-
-public class Project {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+public class ProjectDto {
     private int id;
-private String name;
-private String description;
-
-    public Project(String description, String name, int id) {
-        this.description = description;
-        this.name = name;
-        this.id = id;
-    }
-
-    public Project() {
-
-    }
+    private String name;
+    private String description;
 
     public int getId() {
         return id;
@@ -43,7 +26,11 @@ private String description;
         this.description = description;
     }
 
+    public ProjectDto(String description, String name, int id) {
+        this.description = description;
+        this.name = name;
+        this.id = id;
 
 
-
+    }
 }

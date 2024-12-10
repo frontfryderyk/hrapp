@@ -1,21 +1,28 @@
-package projekty.hrapp.Model;
+package projekty.hrapp.model.entity;
 
 import jakarta.persistence.*;
 
 @Table(name = "users")
 @Entity
 public class User {
-@GeneratedValue(strategy= GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
     private Long id;
-private String username;
-private String password;
+    @Column(name = "name")
+    private String username;
+    @Column(name = "email")
+    private String email;
+    @Column(name = "password")
+    private String password;
+    @Column(name = "rating")
+    private double eloRating;
 
 
     public User(Long id, String username, String password) {
         this.id = id;
         this.username = username;
         this.password = password;
+        this.eloRating = 0.0; //jaka wartosc?
     }
 
     public User() {
@@ -44,5 +51,11 @@ private String password;
 
     public Long getId() {
         return id;
+    }
+    public String getEmail() {
+        return email;
+    }
+    public void setEmail(String email) {
+        this.email = email;
     }
 }

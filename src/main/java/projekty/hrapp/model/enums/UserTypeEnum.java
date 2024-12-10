@@ -1,12 +1,12 @@
-package projekty.hrapp.Model;
+package projekty.hrapp.model.enums;
 
 public enum UserTypeEnum {
-    EMPLOYEE ("employee"),
+    EMPLOYEE("employee"),
     ADMIN("admin");
 
     private String displayName;
 
     UserTypeEnum(String admin) {
-        this.displayName=displayName;
+        this.displayName = displayName;
     }
 }

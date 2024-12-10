@@ -1,4 +1,4 @@
-package projekty.hrapp.Services;
+package projekty.hrapp.services;
 
 import org.springframework.stereotype.Service;
 

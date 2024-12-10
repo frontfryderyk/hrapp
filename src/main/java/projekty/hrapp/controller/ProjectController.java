@@ -1,6 +1,6 @@
-package projekty.hrapp.Controllers;
+package projekty.hrapp.controller;
 
-import projekty.hrapp.Services.ProjectService;
+import projekty.hrapp.services.ProjectService;
 
 public class ProjectController {
     private ProjectService projectService;
