@@ -16,6 +16,8 @@ public class User {
     private String password;
     @Column(name = "rating")
     private double eloRating;
+    @Column
+    private String salt;
 
 
     public User(Long id, String username, String password) {
@@ -23,6 +25,7 @@ public class User {
         this.username = username;
         this.password = password;
         this.eloRating = 0.0; //jaka wartosc?
+        this.salt = "";
     }
 
     public User() {
@@ -52,10 +55,20 @@ public class User {
     public Long getId() {
         return id;
     }
+
     public String getEmail() {
         return email;
     }
+
     public void setEmail(String email) {
         this.email = email;
+    }
+
+    public void setSalt(String salt) {
+        this.salt = salt;
+    }
+
+    public String getSalt() {
+        return salt;
     }
 }

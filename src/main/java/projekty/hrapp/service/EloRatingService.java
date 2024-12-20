@@ -1,4 +1,4 @@
-package projekty.hrapp.services;
+package projekty.hrapp.service;
 
 public class EloRatingService {
 }
