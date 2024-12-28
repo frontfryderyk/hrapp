@@ -5,7 +5,7 @@ import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 import projekty.hrapp.model.enums.UserTypeEnum;
 
-@Table(name="user_type")
+@Table(name = "user_type")
 @Entity
 public class UserType {
     @Id
@@ -39,9 +39,9 @@ public class UserType {
     }
 
     //public List<User> getUsers(){
-       // return users;
-    }
-
-
+    // return users;
 }
+
+
+
 

@@ -5,7 +5,7 @@ public class UserResponse {
     private String name;
     private String email;
 
-    public UserResponse(Integer ID, String imie, String nazwisko, String dataurodzenia) {
+    public UserResponse(Integer ID, String imie, String nazwisko) {
         this.id = id;
         this.name = name;
         this.email = email;

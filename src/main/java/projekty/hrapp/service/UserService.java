@@ -1,8 +1,6 @@
 package projekty.hrapp.service;
 
 import org.springframework.stereotype.Service;
-import pl.javastart.hrm3.Model.Pracownik;
-import pl.javastart.hrm3.Repozytorium.Pracownikrepozytorium;
 import projekty.hrapp.model.dto.UserRequest;
 import projekty.hrapp.model.dto.UserResponse;
 import projekty.hrapp.model.entity.User;
@@ -16,56 +14,58 @@ import java.util.NoSuchElementException;
 public class UserService {
     private final UserRepository userRepository;
 
-    public UserService(UserService userService) {
-        this.userRepository = userService.userRepository;
+    public UserService(UserRepository userRepository) {
+        this.userRepository = userRepository;
     }
 
-    public Integer getUsersnumber() {
+    public Integer getUsersNumber() {
         return Math.toIntExact(userRepository.count());
     }
 
     public List<UserResponse> getAll() {
-        List<User> pracownicy = userRepository.findAll();
+        Iterable<User> users = userRepository.findAll();
         List<UserResponse> response = new ArrayList<>();
-        for (User pracownik : pracownicy) {
-            response.add(new UserResponse((), pracownik.getImie(), pracownik.getNazwisko(), pracownik.getDataUrodzenia()));
+        for (User user : users) {
+            response.add(new UserResponse(user.getId().intValue(), user.getUsername(), user.getEmail()));
         }
         return response;
     }
 
     public UserResponse get(int ID) {
         try {
-            Pracownik pracownik = pracownikrepozytorium.findById(ID).get();
+            User user = userRepository.findById(ID).orElseThrow(() -> new NoSuchElementException("User not found"));
 
-            return new UserResponse(pracownik.getID(), pracownik.getImie(), pracownik.getNazwisko(), pracownik.getDataUrodzenia());
+            return new UserResponse(user.getId().intValue(), user.getUsername(), user.getEmail());
         } catch (NoSuchElementException error) {
             return null;
         }
     }
 
-    public void Add(UserRequest request) {
-        Pracownik pracownik = new Pracownik(request.getNazwisko(), request.getImie(), request.getDataurodzenia(), request.getStawka());
-        pracownikrepozytorium.saveAndFlush(pracownik);
+    public void add(UserRequest request) {
+        User user = new User();
+        user.setUsername(request.getName());
+        user.setEmail(request.getEmail());
+        user.setPassword(request.getPassword());
+
+        userRepository.save(user);
     }
 
     public void Remove(int ID) {
-        pracownikrepozytorium.deleteById(ID);
+        userRepository.deleteById(ID);
 
     }
 
     public void Update(UserRequest request) {
-        Pracownik pracownik = pracownikrepozytorium.findById(request.getId()).get();
-        if (request.getImie() != null) {
-            pracownik.setImie(request.getImie());
+        User user = userRepository.findById(request.getId()).orElseThrow(() -> new NoSuchElementException("User not found"));
+
+        if (request.getName() != null) {
+            user.setUsername(request.getName());
         }
-        if (request.getNazwisko() != null) {
-            pracownik.setNazwisko(request.getNazwisko());
-        }
-        if (request.getDataurodzenia() != null) {
-            pracownik.setDataUrodzenia(request.getDataurodzenia());
+        if (request.getEmail() != null) {
+            user.setEmail(request.getEmail());
         }
 
-        pracownikrepozytorium.saveAndFlush(pracownik);
+        userRepository.save(user);
     }
 }
 

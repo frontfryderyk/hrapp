@@ -1,14 +1,18 @@
 package projekty.hrapp.security;
 
+import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
 import java.util.Date;
 
 @Component
 public class JWTUtil {
-    private final String SECRET_KEY = "werdfghfja98e4jrae480f89ja948fj9se8dj98jsldjfsidj";
+
+    @Value("${jwt.secret}")
+    private String SECRET_KEY;
 
     public String generateToken(String login) {
         return Jwts.builder()
@@ -20,8 +24,17 @@ public class JWTUtil {
     }
 
     public String getLogin(String token) {
-        return Jwts.parser().setSigningKey(SECRET_KEY).parseClaimsJws(token).getBody().getSubject();
-
+        //return Jwts.parser().setSigningKey(SECRET_KEY).    //parseClaimsJws(token).getBody().getSubject();
+        try {
+            Claims claims = Jwts.parserBuilder()
+                    .setSigningKey(token)
+                    .build()
+                    .parseClaimsJws(token)
+                    .getBody();
+            return claims.getSubject();
+        } catch (Exception e) {
+            return null;
+        }
     }
 
     public boolean validateToken(String token) {
