@@ -18,7 +18,7 @@ public class User {
     private double eloRating;
     @Column
     private String salt;
-    ManyToOne
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "user_type_id")
     private UserType userType;
 
