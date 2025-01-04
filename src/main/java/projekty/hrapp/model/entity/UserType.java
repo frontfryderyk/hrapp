@@ -1,8 +1,6 @@
 package projekty.hrapp.model.entity;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 import projekty.hrapp.model.enums.UserTypeEnum;
 
 @Table(name = "user_type")
@@ -10,6 +8,7 @@ import projekty.hrapp.model.enums.UserTypeEnum;
 public class UserType {
     @Id
     private Long id;
+    @Enumerated(EnumType.STRING)
     private UserTypeEnum type;
     //private List<User> users=new ArrayList<>();
 
@@ -40,6 +39,7 @@ public class UserType {
 
     //public List<User> getUsers(){
     // return users;
+
 }
 
 

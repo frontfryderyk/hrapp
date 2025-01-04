@@ -18,20 +18,22 @@ public class User {
     private double eloRating;
     @Column
     private String salt;
+    ManyToOne
+    @JoinColumn(name = "user_type_id")
+    private UserType userType;
 
-
-    public User(Long id, String username, String password) {
+    public User(Long id, String username, String password, double eloRating, String salt, UserType userType) {
         this.id = id;
         this.username = username;
         this.password = password;
         this.eloRating = 0.0; //jaka wartosc?
         this.salt = "";
+        this.userType = userType;
     }
 
     public User() {
 
     }
-
 
 
     public void setUsername(String username) {
@@ -68,5 +70,21 @@ public class User {
 
     public String getSalt() {
         return salt;
+    }
+
+    public void setEloRating(double eloRating) {
+        this.eloRating = eloRating;
+    }
+
+    public double getEloRating() {
+        return eloRating;
+    }
+
+    public void setUserType(UserType userType) {
+        this.userType = userType;
+    }
+
+    public UserType getUserType() {
+        return userType;
     }
 }

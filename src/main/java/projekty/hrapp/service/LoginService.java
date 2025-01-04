@@ -14,6 +14,7 @@ import projekty.hrapp.model.entity.User;
 import projekty.hrapp.repository.UserRepository;
 
 import java.util.Objects;
+import java.util.Optional;
 
 @Service
 public class LoginService {
@@ -30,12 +31,12 @@ public class LoginService {
     private JWTUtil jwtUtil;
 
     public LoginResponse login(LoginRequest request) {
-        User user = userRepository.findById(request.getLogin());
-        if (user == null) {
+        Optional<User> user = Optional.ofNullable(userRepository.findByUsername(request.getLogin()));
+        if (user.isEmpty()) {
             return null;
         }
-        String hashPassword = Passwordutil.hashPassword(request.getPassword(), user.getSalt());
-        if (Objects.equals(hashPassword, user.getPassword())) {
+        String hashPassword = Passwordutil.hashPassword(request.getPassword(), user.get().getSalt());
+        if (Objects.equals(hashPassword, user.get().getPassword())) {
             LoginResponse loginResponse = new LoginResponse(jwtUtil.generateToken(request.getLogin()));
             return loginResponse;
         }
@@ -53,12 +54,12 @@ public class LoginService {
             user.setUsername(registerRequest.getLogin());
             user.setPassword(Passwordutil.hashPassword(registerRequest.getPassword(), salt));
             user.setSalt(salt);
-            UserType userType= userTypeRepository.findById(registerRequest.getUserType()).orElseThrow(()->new RuntimeException("invalid usertype"));
-           user.setUserType(userType);
-           userRepository.save(user);
-           return "registration successful";
-        } catch (Exception e){
-            return ("registration failed"+e.getMessage());
+            UserType userType = userTypeRepository.findById(registerRequest.getUserType()).orElseThrow(() -> new RuntimeException("invalid usertype")).getUserType();
+            user.setUserType(userType);
+            userRepository.save(user);
+            return "registration successful";
+        } catch (Exception e) {
+            return ("registration failed" + e.getMessage());
         }
 
     }
