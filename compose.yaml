@@ -1,18 +1,44 @@
 services:
-  mysql:
-    image: 'mysql:latest'
-    environment:
-      - 'MYSQL_DATABASE=mydatabase'
-      - 'MYSQL_PASSWORD=secret'
-      - 'MYSQL_ROOT_PASSWORD=verysecret'
-      - 'MYSQL_USER=myuser'
+  backend:
+    build: .
+    container_name: hrapp-backend
     ports:
-      - '3306'
-#  sqlserver:
-#    image: 'mcr.microsoft.com/mssql/server:latest'
-#    environment:
-#      - 'ACCEPT_EULA=yes'
-#      - 'MSSQL_PID=express'
-#      - 'MSSQL_SA_PASSWORD=verYs3cret'
-#    ports:
-#      - '1433'
+      - "8080:8080"
+      - "5005:5005"
+    environment:
+      - SPRING_DATASOURCE_URL=jdbc:mysql://mysql:3306/hrapp
+      - SPRING_DATASOURCE_USERNAME=root
+      - SPRING_DATASOURCE_PASSWORD=root
+    depends_on:
+      mysql:
+        condition: service_healthy
+    restart: unless-stopped
+    volumes:
+      - .:/app  # dla hot-reload
+      - ~/.m2:/root/.m2  # cache mavena
+    working_dir: /app
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8080/actuator/health || exit 1"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 40s
+
+  mysql:
+    image: mysql:8.0
+    container_name: hrapp-mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: hrapp
+    ports:
+      - "3307:3306"
+    volumes:
+      - mysql_data:/var/lib/mysql
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "-u", "root", "-proot"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+volumes:
+  mysql_data:

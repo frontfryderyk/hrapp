@@ -9,14 +9,17 @@ public class Application {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
+    private Long id;
 
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id", nullable = false)
     private User user;
 
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "project_id", nullable = false)
     private Project project;
 
+    @Enumerated(EnumType.STRING)
     @Column(nullable = false)
     private ApplicationStatus applicationStatus = ApplicationStatus.PENDING;
 
@@ -46,11 +49,11 @@ public class Application {
         this.project = project;
     }
 
-    public int getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
