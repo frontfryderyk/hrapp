@@ -26,7 +26,6 @@ public class Application {
     public Application() {
     }
 
-    ;
 
     public Application(User user, Project project) {
         this.user = user;

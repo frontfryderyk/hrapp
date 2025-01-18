@@ -9,7 +9,7 @@ services:
       - SPRING_DATASOURCE_URL=jdbc:mysql://mysql:3306/hrapp?useSSL=false&allowPublicKeyRetrieval=true&serverTimezone=UTC
       - SPRING_DATASOURCE_USERNAME=root
       - SPRING_DATASOURCE_PASSWORD=root
-      - SPRING_DOCKER_COMPOSE_ENABLED=false
+      - SPRING_DOCKER_COMPOSE_SKIP=true
     depends_on:
       mysql:
         condition: service_healthy
@@ -25,6 +25,8 @@ services:
       timeout: 10s
       retries: 3
       start_period: 40s
+    networks:
+      - hrapp-network
 
   mysql:
     image: mysql:8.0
@@ -36,11 +38,18 @@ services:
       - "3307:3306"
     volumes:
       - mysql_data:/var/lib/mysql
+      - ./src/main/resources/data.sql:/docker-entrypoint-initdb.d/data.sql
     healthcheck:
       test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "-u", "root", "-proot"]
       interval: 10s
       timeout: 5s
       retries: 5
+    networks:
+      - hrapp-network
 
 volumes:
   mysql_data:
+
+networks:
+  hrapp-network:
+    driver: bridge
