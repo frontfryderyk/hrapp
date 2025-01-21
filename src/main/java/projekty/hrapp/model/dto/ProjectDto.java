@@ -1,11 +1,15 @@
 package projekty.hrapp.model.dto;
+import lombok.Builder;
 
+
+
+@Builder
 public class ProjectDto {
-    private int id;
+    private Long id;
     private String name;
     private String description;
 
-    public int getId() {
+    public Long getId() {
         return id;
     }
 
@@ -16,7 +20,7 @@ public class ProjectDto {
     public String getDescription() {
         return description;
     }
-    public void setId(int id) {
+    public void setId(Long id) {
         this.id = id;
     }
     public void setName(String name) {
@@ -26,7 +30,7 @@ public class ProjectDto {
         this.description = description;
     }
 
-    public ProjectDto(String description, String name, int id) {
+    public ProjectDto(String description, String name, Long id) {
         this.description = description;
         this.name = name;
         this.id = id;

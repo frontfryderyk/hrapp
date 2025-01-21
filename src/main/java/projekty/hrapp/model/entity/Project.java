@@ -1,10 +1,14 @@
 package projekty.hrapp.model.entity;
-
+import lombok.Builder;
+import lombok.Data;
 import jakarta.persistence.*;
 
-@Entity
-@Table(name = "projects")
 
+
+@Entity
+@Builder
+@Data
+@Table(name = "projects")
 public class Project {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -14,7 +18,7 @@ public class Project {
     @Column(name = "description")
     private String description;
 
-    public Project(String description, String name, int id) {
+    public Project(String description, String name, Long id) {
         this.description = description;
         this.name = name;
         this.id = (long) id;
