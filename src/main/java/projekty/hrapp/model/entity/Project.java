@@ -7,7 +7,6 @@ import jakarta.persistence.*;
 
 @Entity
 @Builder
-@Data
 @Table(name = "projects")
 public class Project {
     @Id
@@ -18,10 +17,11 @@ public class Project {
     @Column(name = "description")
     private String description;
 
-    public Project(String description, String name, Long id) {
-        this.description = description;
-        this.name = name;
+    public Project(Long id,String name, String description) {
         this.id = (long) id;
+        this.name = name;
+        this.description = description;
+
     }
 
     public Project() {

@@ -21,7 +21,11 @@ private JWTRequestFilter jwtRequestFilter;
                         .requestMatchers("/api/v1/login").permitAll()
                         .requestMatchers("/api/v1/login/register").permitAll()
                         .requestMatchers("/actuator/**").permitAll()
+                        .requestMatchers("/api/projects/**").permitAll()
                         .anyRequest().authenticated()
+                        .requestMatchers("/").permitAll()
+                        .requestMatchers("/test").permitAll()
+                        .requestMatchers("/actuator/**").permitAll()
                 )
                 .sessionManagement(session->session
                         .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
