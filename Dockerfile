@@ -8,6 +8,8 @@ COPY .mvn ./.mvn
 
 RUN apt-get update && apt-get install -y curl
 
+RUN chmod +x mvnw
+
 EXPOSE 8080
 EXPOSE 5005
 

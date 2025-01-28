@@ -12,20 +12,21 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 @Configuration
 @EnableWebSecurity
 public class SecurityConfig {
-@Autowired
-private JWTRequestFilter jwtRequestFilter;
+    @Autowired
+    private JWTRequestFilter jwtRequestFilter;
     @Bean
     SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http.csrf(csrf -> csrf.disable())
                 .authorizeHttpRequests(authorize->authorize
-                        .requestMatchers("/api/v1/login").permitAll()
-                        .requestMatchers("/api/v1/login/register").permitAll()
-                        .requestMatchers("/actuator/**").permitAll()
-                        .requestMatchers("/api/projects/**").permitAll()
-                        .anyRequest().authenticated()
                         .requestMatchers("/").permitAll()
                         .requestMatchers("/test").permitAll()
                         .requestMatchers("/actuator/**").permitAll()
+                        .requestMatchers("/api/v1/projects/**").permitAll()
+                        .requestMatchers("/api/v1/login").permitAll()
+                        .requestMatchers("/api/v1/login/register").permitAll()
+                        .requestMatchers("/api/auth/login").permitAll()
+                        .requestMatchers("/api/auth/register").permitAll()
+                        .anyRequest().authenticated()
                 )
                 .sessionManagement(session->session
                         .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
